@@ -45,39 +45,39 @@ Esto abrirá la app en [http://localhost:5173](http://localhost:5173)
 ## 📁 Estructura del proyecto
 
 ```plaintext
-📁 public/                         # Archivos públicos accesibles directamente desde el navegador
+📁 public/                          # Archivos públicos accesibles directamente desde el navegador
 
-📁 src/                            # Código fuente de la aplicación
-├── 📁 assets/                     # Recursos estáticos (SVG, imágenes, etc.)
-│   └── react.svg                 # Ejemplo de ícono o imagen utilizada
+📁 src/                             # Código fuente de la aplicación
+├── 📁 assets/                      # Recursos estáticos (SVG, imágenes, etc.)
+│   └── react.svg                   # Ejemplo de ícono o imagen utilizada
 
-├── 📁 components/                # Componentes UI organizados por funcionalidad
-│   ├── 📁 Users/                 # Componentes relacionados con usuarios
-│   │   ├── 📁 UsersList/         # Vista en forma de tarjeta
-│   │   │   ├── UserCard.tsx     # Componente visual de cada usuario
+├── 📁 components/                  # Componentes UI organizados por funcionalidad
+│   ├── 📁 Users/                   # Componentes relacionados con usuarios
+│   │   ├── 📁 UsersList/           # Vista en forma de tarjeta
+│   │   │   ├── UserCard.tsx         # Componente visual de cada usuario
 │   │   │   ├── UserSkeletonCard.tsx # Placeholder de carga tipo tarjeta
-│   │   │   └── index.tsx        # Exportador central de UsersList
-│   │   ├── 📁 UsersTable/        # Vista en forma de tabla
-│   │   │   ├── UserRow.tsx      # Fila individual de usuario
+│   │   │   └── index.tsx           # Exportador central de UsersList
+│   │   ├── 📁 UsersTable/          # Vista en forma de tabla
+│   │   │   ├── UserRow.tsx         # Fila individual de usuario
 │   │   │   ├── UserSkeletonRow.tsx # Placeholder de carga tipo fila
-│   │   │   └── index.tsx        # Exportador central de UsersTable
-│   │   └── 📁 UserToolbar/       # Barra de herramientas para filtros
+│   │   │   └── index.tsx           # Exportador central de UsersTable
+│   │   └── 📁 UserToolbar/         # Barra de herramientas para filtros
 │   │       ├── FilterFieldSelector.tsx # Selector del campo a filtrar
 │   │       ├── FilterValueSelector.tsx # Selector del valor de filtro
-│   │       ├── index.tsx         # Integrador del toolbar
-|   |       └── UserFilter.tsx    # Aplica la lógica y visualización del filtro
-│   ├── Button.tsx                # Componente de botón reutilizable
-│   └── Header.tsx                # Encabezado de la aplicación
+│   │       ├── index.tsx           # Integrador del toolbar
+|   |       └── UserFilter.tsx      # Aplica la lógica y visualización del filtro
+│   ├── Button.tsx                  # Componente de botón reutilizable
+│   └── Header.tsx                  # Encabezado de la aplicación
 
-├── 📁 hooks/                     # Hooks personalizados reutilizables
-│   ├── useInfiniteScroll.ts     # Scroll infinito para paginación
-│   └── useUsers.ts               # Hook para obtener y filtrar usuarios
+├── 📁 hooks/                       # Hooks personalizados reutilizables
+│   ├── useInfiniteScroll.ts        # Scroll infinito para paginación
+│   └── useUsers.ts                 # Hook para obtener y filtrar usuarios
 
 ├── 📁 lib/                       # Configuraciones, tipos y utilidades generales
-│   ├── api.ts                   # Configuración base de Axios
-│   ├── config.ts                # Configuraciones del entorno y constantes
-│   ├── definitions.ts           # Tipos TypeScript globales (interfaces/models)
-│   └── utils.ts                 # Funciones auxiliares reutilizables
+│   ├── api.ts                    # Configuración base de Axios
+│   ├── config.ts                 # Configuraciones del entorno y constantes
+│   ├── definitions.ts            # Tipos TypeScript globales (interfaces/models)
+│   └── utils.ts                  # Funciones auxiliares reutilizables
 
 ├── 📁 services/                 # Capa de acceso a datos/API
 │   └── userService.ts           # Operaciones sobre el endpoint de usuarios
@@ -116,7 +116,7 @@ npm run lint
 
 ## 📄 Licencia
 
-Este proyecto es de código cerrado / uso académico / uso comercial. _(Escoge una opción y actualiza aquí)_
+Este proyecto es de uso académico
 
 ## 🚧 Errores comunes usando Tailwindcss (Windows)
 
