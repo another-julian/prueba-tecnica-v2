@@ -116,7 +116,7 @@ npm run lint
 
 ## API utilizada
 
-Este proyecto consume datos de usuarios desde la API pública de [DummyJSON](https://dummyjson.com/users).
+Este proyecto consume datos de usuarios desde la API pública de [DummyJSON](https://dummyjson.com/docs/).
 
 La información obtenida incluye nombres, correos, direcciones, datos demográficos y de contacto, los cuales fueron utilizados exclusivamente con fines prácticos para el desarrollo del sistema de visualización de usuarios.
 
