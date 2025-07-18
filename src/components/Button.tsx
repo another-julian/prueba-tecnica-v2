@@ -23,7 +23,8 @@ export default function Button({
     primary: "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500",
     secondary:
       "bg-gray-600 text-gray-white hover:bg-gray-400 focus:ring-gray-400",
-    ghost: "bg-transparent text-gray-600 hover:bg-gray-100 focus:ring-gray-300",
+    ghost:
+      "bg-transparent text-gray-600 hover:bg-gray-100 focus:ring-gray-300 border border-gray-300",
   };
 
   const sizes = {

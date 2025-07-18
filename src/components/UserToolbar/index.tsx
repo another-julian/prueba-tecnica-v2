@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import UserFilter from "./UserFilter";
 import Button from "../Button";
 import clsx from "clsx";
@@ -19,31 +19,75 @@ export default function UserToolbar({
   const [localSearch, setLocalSearch] = useState(search);
   const [filtrar, setFiltrar] = useState<boolean>(false);
 
+  // Para mostrar y ocultar input de búsqueda
+  const [buscar, setBuscar] = useState<boolean>(false);
+  const [device, setDevice] = useState<string>("desktop");
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        if (device !== "desktop") setDevice("desktop");
+        if (localSearch.trim() && !buscar) setBuscar(true);
+        if (buscar && !localSearch.trim()) setBuscar(false);
+      } else {
+        if (device !== "mobile") setDevice("mobile");
+        if (localSearch.trim() && !buscar) setBuscar(true);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [localSearch, device]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSearchChange(localSearch);
   };
 
+  // Referencia para evitar re-renderizados innecesarios
+  const prevSearchRef = useRef<string>("");
+
+  // Efecto para manejar el cambio de búsqueda
+  useEffect(() => {
+    const prevSearch = prevSearchRef.current;
+
+    if (localSearch.trim() === "") {
+      onClear();
+    }
+
+    const handler = setTimeout(() => {
+      if (localSearch.trim() !== "" && localSearch.trim() !== prevSearch) {
+        onSearchChange(localSearch);
+      }
+    }, 800);
+
+    // Actualiza el valor previo después de evaluar
+    prevSearchRef.current = localSearch.trim();
+
+    return () => clearTimeout(handler);
+  }, [localSearch]);
+
   return (
     <div className="">
       <div
         className={clsx("w-full flex gap-4 md:items-center justify-between", {
-          "flex-wrap md:flex-col md:items-start": localSearch,
+          "flex-col md:flex-row": buscar,
         })}
       >
         {/* Filtros */}
         <div
           className={clsx("flex gap-4 items-center flex-wrap", {
-            "w-full md:w-1/2": filtrar,
+            "w-full": filtrar,
             "w-fit": !filtrar,
           })}
         >
-          {localSearch ? (
+          {buscar ? (
             <Button
               onClick={() => {
                 onClear();
                 setLocalSearch("");
                 setFiltrar(false);
+                setBuscar(false);
               }}
               className="bg-gray-600 text-gray-50 px-4 py-2 rounded hover:bg-gray-400 text-sm"
               aria-label="Limpiar búsqueda"
@@ -78,7 +122,11 @@ export default function UserToolbar({
               "md:w-1/3": !localSearch,
             })}
           >
+            <label htmlFor="buscar" className="sr-only">
+              Buscar usuario
+            </label>
             <input
+              id="buscar"
               type="text"
               placeholder="Buscar por nombre o email..."
               value={localSearch}
@@ -86,12 +134,20 @@ export default function UserToolbar({
                 setLocalSearch(e.target.value);
                 // onSearchChange(localSearch); // Descomentar si se quiere buscar en tiempo real
               }}
-              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-300"
-              aria-label="Buscar usuario"
+              className={clsx(
+                "w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-300  md:block",
+                {
+                  hidden: !buscar,
+                }
+              )}
             />
             <Button
-              type="submit"
+              type={"submit"}
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm"
+              onClick={() => {
+                if (!localSearch && device === "mobile")
+                  setBuscar((prev) => !prev);
+              }}
             >
               Buscar
             </Button>

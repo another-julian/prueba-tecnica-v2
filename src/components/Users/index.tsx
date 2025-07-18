@@ -3,6 +3,7 @@ import { useUsers } from "../../hooks/useUsers";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import UsersTable from "./UsersTable";
 import UsersList from "./UsersList";
+import Button from "../Button";
 
 interface Props {
   search: string;
@@ -14,7 +15,7 @@ export default function Users({ search, filterKey, filterValue }: Props) {
   const [sortBy, setSortBy] = useState("firstName");
   const [order, setOrder] = useState("asc");
 
-  const { users, loading, error, hasMore, loadMore } = useUsers(
+  const { users, loading, error, hasMore, loadMore, setRetry } = useUsers(
     search,
     sortBy,
     order,
@@ -58,7 +59,19 @@ export default function Users({ search, filterKey, filterValue }: Props) {
       />
 
       <div className="mt-4 text-center text-sm text-gray-600">
-        {error && <span className="text-red-500">{error}</span>}
+        {error && (
+          <div className="text-red-500 flex flex-col items-center gap-2">
+            <span>{error}</span>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setRetry((prev) => prev + 1);
+              }}
+            >
+              Reintentar
+            </Button>
+          </div>
+        )}
         {!hasMore && !loading && "No hay más resultados."}
       </div>
       <div ref={lastRowRef} className="h-1" />

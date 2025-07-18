@@ -8,7 +8,7 @@ export default function UserRow({
   index: number;
 }) {
   return (
-    <tr className="border-b border-gray-100 hover:bg-gray-50">
+    <tr className="border-b border-gray-100 hover:bg-gray-50 ">
       <td className="">{index + 1}</td>
       <td className="px-4 py-5">
         <div className="flex items-center space-x-3">

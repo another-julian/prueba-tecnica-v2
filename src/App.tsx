@@ -15,7 +15,7 @@ function App() {
   };
 
   return (
-    <main className="max-w-[1200px] mx-auto p-4">
+    <main className="max-w-[1200px] mx-auto p-4 md:px-10">
       <Header />
       <div className="sticky top-0 z-10 bg-white py-4 border-b border-gray-200">
         <UserToolbar

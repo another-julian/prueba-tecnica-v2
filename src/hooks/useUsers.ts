@@ -16,6 +16,7 @@ export const useUsers = (
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [retry, setRetry] = useState(0);
 
   // Reset si cambia búsqueda, orden o filtro
   useEffect(() => {
@@ -27,7 +28,7 @@ export const useUsers = (
   useEffect(() => {
     let cancel = false;
     if (!hasMore) return;
-
+    setError(null);
     setLoading(true);
     fetchUsers(page, search, sortBy, order, filterKey, filterValue)
       .then(({ users: newUsers, total }) => {
@@ -46,7 +47,7 @@ export const useUsers = (
     return () => {
       cancel = true;
     };
-  }, [page, search, sortBy, order, hasMore, filterKey, filterValue]);
+  }, [page, search, sortBy, order, hasMore, filterKey, filterValue, retry]);
 
   const loadMore = () => {
     if (error) return;
@@ -61,5 +62,7 @@ export const useUsers = (
     error,
     hasMore,
     loadMore,
+    setRetry,
+    setError,
   };
 };
