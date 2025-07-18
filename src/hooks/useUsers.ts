@@ -2,11 +2,14 @@
 import { useEffect, useState } from "react";
 import { fetchUsers } from "../services/userService";
 import type { User } from "../lib/definitions";
+import { DEFAULT_PAGE_SIZE } from "../lib/config";
 
 export const useUsers = (
-  search: string,
+  search: string = "",
   sortBy: string = "firstName",
-  order: string = "asc"
+  order: string = "asc",
+  filterKey?: string,
+  filterValue?: string
 ) => {
   const [users, setUsers] = useState<User[]>([]);
   const [page, setPage] = useState(1);
@@ -14,25 +17,23 @@ export const useUsers = (
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Reset cuando cambia la búsqueda o el orden
+  // Reset si cambia búsqueda, orden o filtro
   useEffect(() => {
     setUsers([]);
     setPage(1);
     setHasMore(true);
-  }, [search, sortBy, order]);
+  }, [search, sortBy, order, filterKey, filterValue]);
 
-  // Cargar usuarios al cambiar página, búsqueda o orden
   useEffect(() => {
     let cancel = false;
     if (!hasMore) return;
 
     setLoading(true);
-    fetchUsers(page, search, sortBy, order)
+    fetchUsers(page, search, sortBy, order, filterKey, filterValue)
       .then(({ users: newUsers, total }) => {
         if (cancel) return;
-
         setUsers((prev) => [...prev, ...newUsers]);
-        const loaded = (page - 1) * 100 + newUsers.length; // asumiendo pageSize = 100
+        const loaded = (page - 1) * DEFAULT_PAGE_SIZE + newUsers.length;
         setHasMore(loaded < total);
       })
       .catch(() => {
@@ -45,7 +46,7 @@ export const useUsers = (
     return () => {
       cancel = true;
     };
-  }, [page, search, sortBy, order, hasMore]);
+  }, [page, search, sortBy, order, hasMore, filterKey, filterValue]);
 
   const loadMore = () => {
     if (error) return;

@@ -2,7 +2,9 @@ export type User = {
   id: number;
   firstName: string;
   lastName: string;
+  age: string;
   email: string;
   image: string;
-  country: string;
+  city: string;
+  bloodGroup: string;
 };
